@@ -37,9 +37,9 @@ two frameworks. Every page here is a real build, not a mock-up.</p>
 <table>
 <thead><tr><th scope="col">Look</th><th scope="col" colspan="2">Built with</th></tr></thead>
 <tbody>
-<tr><th scope="row">Stock theme<span>The themes as they ship, out of the box.</span></th><td><a href="mkdocs-stock.html" data-preview="mkdocs-stock.html">MkDocs &rarr;</a></td><td><a href="jekyll-stock.html" data-preview="jekyll-stock.html">Jekyll &rarr;</a></td></tr>
-<tr><th scope="row">Methods paper<span>Serif body, narrow measure, indigo accent, small-caps section labels.</span></th><td><a href="mkdocs-paper.html" data-preview="mkdocs-paper.html">MkDocs &rarr;</a></td><td><a href="jekyll-paper.html" data-preview="jekyll-paper.html">Jekyll &rarr;</a></td></tr>
-<tr><th scope="row">Terminal<span>Dark ground, monospaced headings, amber and green accents.</span></th><td><a href="mkdocs-terminal.html" data-preview="mkdocs-terminal.html">MkDocs &rarr;</a></td><td><a href="jekyll-terminal.html" data-preview="jekyll-terminal.html">Jekyll &rarr;</a></td></tr>
+<tr><th scope="row">Stock theme<span>The themes as they ship, out of the box.</span></th><td><a href="mkdocs-stock.html">MkDocs &rarr;</a></td><td><a href="jekyll-stock.html">Jekyll &rarr;</a></td></tr>
+<tr><th scope="row">Methods paper<span>Serif body, narrow measure, indigo accent, small-caps section labels.</span></th><td><a href="mkdocs-paper.html">MkDocs &rarr;</a></td><td><a href="jekyll-paper.html">Jekyll &rarr;</a></td></tr>
+<tr><th scope="row">Terminal<span>Dark ground, monospaced headings, amber and green accents.</span></th><td><a href="mkdocs-terminal.html">MkDocs &rarr;</a></td><td><a href="jekyll-terminal.html">Jekyll &rarr;</a></td></tr>
 </tbody></table>
 <div class="note">
 <strong>These are previews, not working sites.</strong>
@@ -51,22 +51,6 @@ the Theory section. That page also shows how tables and code blocks come out.</l
 </ul>
 </div>
 <footer>Source: the <a href="https://github.com/aalbrechtsen/angsd/wiki">ANGSD wiki</a> &middot;
-<a href="angsd-looks.html" data-preview="angsd-looks.html">earlier hand-made sketches</a></footer>
+<a href="angsd-looks.html">earlier hand-made sketches</a></footer>
 </main>
-<script>
-(function(){
-  var RAW='https://raw.githubusercontent.com/aalbrechtsen/angsd/wiki-preview/preview/';
-  var PROXY='https://htmlpreview.github.io/?';
-  // htmlpreview rewrites hrefs in the source, which doubles up any proxy URL we
-  // hard-code. Build them here instead, after the page is in the document.
-  var viaProxy = location.hostname.indexOf('htmlpreview') > -1
-              || location.hostname.indexOf('raw.github') > -1
-              || location.protocol === 'file:';
-  var links = document.querySelectorAll('a[data-preview]');
-  for (var i = 0; i < links.length; i++) {
-    var f = links[i].getAttribute('data-preview');
-    links[i].setAttribute('href', viaProxy ? PROXY + RAW + f : f);
-  }
-})();
-</script>
 </body></html>
