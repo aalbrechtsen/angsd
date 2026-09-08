@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ANGSD wiki design previews</title>
+<style>
+:root{--bg:#f5f6f8;--card:#fff;--ink:#1b1f26;--dim:#5d6674;--line:#d8dce3;--accent:#2f6f66}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1216;--card:#171b21;--ink:#e6eaf0;
+  --dim:#98a2b1;--line:#2a3038;--accent:#5fb3a6}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.6 -apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:760px;margin:0 auto;padding:48px 22px 70px}
+h1{font-size:26px;margin:0 0 6px;letter-spacing:-.01em;text-wrap:balance}
+.lede{color:var(--dim);margin:0 0 30px;max-width:62ch}
+table{width:100%;border-collapse:collapse;background:var(--card);
+  border:1px solid var(--line);border-radius:10px;overflow:hidden}
+th,td{text-align:left;padding:15px 16px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child th,tr:last-child td{border-bottom:0}
+thead th{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--dim);
+  padding-top:13px;padding-bottom:13px}
+th[scope=row]{font-weight:600;width:52%}
+th span{display:block;font-weight:400;font-size:12.5px;color:var(--dim);margin-top:3px}
+tbody td{width:24%}
+a{color:var(--accent);font-weight:600;text-decoration:none;white-space:nowrap}
+a:hover{text-decoration:underline}
+.note{margin-top:30px;padding:16px 18px;background:var(--card);
+  border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:8px;
+  font-size:13.5px;color:var(--dim)}
+.note strong{color:var(--ink)}
+.note ul{margin:8px 0 0;padding-left:20px}
+.note li{margin:4px 0}
+footer{margin-top:26px;font-size:13px;color:var(--dim)}
+footer a{font-weight:400}
+</style></head><body><main>
+<h1>ANGSD wiki &mdash; design previews</h1>
+<p class="lede">The same 86 wiki pages, built as a documentation site three ways, in each of the
+two frameworks. Every page here is a real build, not a mock-up.</p>
+<table>
+<thead><tr><th scope="col">Look</th><th scope="col" colspan="2">Built with</th></tr></thead>
+<tbody>
+<tr><th scope="row">Stock theme<span>The themes as they ship, out of the box.</span></th><td><a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/aalbrechtsen/angsd/wiki-preview/preview/mkdocs-stock.html">MkDocs &rarr;</a></td><td><a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/aalbrechtsen/angsd/wiki-preview/preview/jekyll-stock.html">Jekyll &rarr;</a></td></tr>
+<tr><th scope="row">Methods paper<span>Serif body, narrow measure, indigo accent, small-caps section labels.</span></th><td><a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/aalbrechtsen/angsd/wiki-preview/preview/mkdocs-paper.html">MkDocs &rarr;</a></td><td><a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/aalbrechtsen/angsd/wiki-preview/preview/jekyll-paper.html">Jekyll &rarr;</a></td></tr>
+<tr><th scope="row">Terminal<span>Dark ground, monospaced headings, amber and green accents.</span></th><td><a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/aalbrechtsen/angsd/wiki-preview/preview/mkdocs-terminal.html">MkDocs &rarr;</a></td><td><a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/aalbrechtsen/angsd/wiki-preview/preview/jekyll-terminal.html">Jekyll &rarr;</a></td></tr>
+</tbody></table>
+<div class="note">
+<strong>These are previews, not working sites.</strong>
+<ul>
+<li>Search, navigation links and the theme toggle do nothing.</li>
+<li>Each preview holds two pages &mdash; switch with the buttons at the top.</li>
+<li><strong>To see rendered formulas, open the Genotype Likelihoods page</strong> and scroll to
+the Theory section. That page also shows how tables and code blocks come out.</li>
+</ul>
+</div>
+<footer>Source: the <a href="https://github.com/ANGSD/angsd/wiki">ANGSD wiki</a> &middot;
+<a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/aalbrechtsen/angsd/wiki-preview/preview/angsd-looks.html">earlier hand-made sketches</a></footer>
+</main></body></html>
