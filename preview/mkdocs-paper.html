@@ -43,7 +43,7 @@
 .demo-btn:hover{color:#fff}
 .demo-btn.on{background:#e6eaf0;color:#12151b;border-color:#e6eaf0;font-weight:600}
 .demo-btn:focus-visible{outline:2px solid #7aa2ff;outline-offset:1px}
-.mermaid{display:block;margin:20px 0;text-align:center}
+.mermaid{display:block;margin:20px 0;text-align:center;background:transparent}
 mjx-container[display]{overflow-x:auto;overflow-y:hidden;max-width:100%}
 </style>
 <div class="demo-bar"><span class="demo-tag">MkDocs Material - methods paper</span>
@@ -3492,8 +3492,7 @@ mjx-container[display]{overflow-x:auto;overflow-y:hidden;max-width:100%}
 <h2 id="overview">Overview</h2>
 <p>ANGSD reads mapped reads or precomputed genotype likelihoods/probabilities, and most analyses
 work directly on the genotype likelihoods rather than on called genotypes.</p>
-<p><code>mermaid
-flowchart LR
+<pre class="mermaid">flowchart LR
     i1["BAM / CRAM&lt;br/&gt;mpileup"] --&gt; s1["Sequence data"]
     i2["VCF / BCF&lt;br/&gt;GLF / beagle"] --&gt; s2["Genotype likelihoods"]
     i3["beagle"] --&gt; s3["Genotype probabilities"]
@@ -3506,7 +3505,7 @@ flowchart LR
     style i3 fill:#ffe0b2,stroke:#e65100
     style a1 fill:#bbdefb,stroke:#0d47a1
     style a2 fill:#bbdefb,stroke:#0d47a1
-    style a3 fill:#bbdefb,stroke:#0d47a1</code></p>
+    style a3 fill:#bbdefb,stroke:#0d47a1</pre>
 <p>See <a href="Input/">Input data</a> for the supported formats and <a href="Filters/">Filters</a> for read and site filtering.</p>
 <h1 id="synopsis">Synopsis</h1>
 <div class="highlight"><pre><span></span><code>./angsd [OPTIONS]
@@ -7124,31 +7123,19 @@ First 2 columns are the genomic positions, and the final 10 values are the genot
 <table>
 <thead>
 <tr>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>0</td>
-<td>1</td>
-<td>2</td>
-<td>3</td>
-<td>4</td>
-<td>5</td>
-<td>6</td>
-<td>7</td>
-<td>8</td>
-<td>9</td>
-</tr>
 <tr>
 <td>AA</td>
 <td>AC</td>
@@ -7161,56 +7148,12 @@ First 2 columns are the genomic positions, and the final 10 values are the genot
 <td>GT</td>
 <td>TT</td>
 </tr>
-<tr>
-<td>And we write the genotype likelihood as</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>$$</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>L(G={A_1 ,A_2}</td>
-<td>D ) \propto Pr (D</td>
-<td>G={A_1 ,A_2 } ),\qquad A_1 ,A_2 \in {A,C,G,T}.</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>$$</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
 </tbody>
 </table>
+<p>And we write the genotype likelihood as
+$$
+L(G={A_1 ,A_2}|D ) \propto Pr (D|G={A_1 ,A_2 } ),\qquad A_1 ,A_2 \in {A,C,G,T}.
+$$</p>
 <h2 id="gatk-genotype-likelihoods">GATK genotype likelihoods</h2>
 <p>In angsd we use the direct method of the first version of GATK (dragon). This is simply</p>
 <div class="arithmatex">\[
@@ -7308,7 +7251,7 @@ lhet_{n,k} = \log  \frac{\binom{n}{k}}{2^n}
       
     
   </div>
-<script>window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]],displayMath:[["$$","$$"],["\\[","\\]"]]},svg:{fontCache:"local"},options:{skipHtmlTags:["script","noscript","style","textarea"],ignoreHtmlClass:"highlight|language-text"}};</script>
+<script>window.MathJax={tex:{inlineMath:[["\(","\)"]],displayMath:[["\[","\]"]]},svg:{fontCache:"local"},options:{skipHtmlTags:["script","noscript","style","textarea","pre","code"]}};</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-svg.js"></script>
 <script>
 document.querySelectorAll('.demo-btn').forEach(function(btn){
@@ -7321,6 +7264,6 @@ document.querySelectorAll('.demo-btn').forEach(function(btn){
 });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
-<script>(function(){if(!window.mermaid)return;var d=(document.querySelector("[data-md-color-scheme=slate]")!==null)||(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);mermaid.initialize({startOnLoad:true,theme:d?"dark":"default",securityLevel:"loose"});})();</script>
+<script>(function(){if(!window.mermaid)return;var d=(document.querySelector("[data-md-color-scheme=slate]")!==null)||(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);mermaid.initialize({startOnLoad:false,theme:d?"dark":"default",securityLevel:"loose"});try{mermaid.run({querySelector:".mermaid"});}catch(e){}})();</script>
 </body>
 </html>
