@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Three Looks for ANGSD</title>
+<style>html{color-scheme:light dark}body{margin:0;font:14px/1.5 -apple-system,Segoe UI,Roboto,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@400&family=Spectral:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+/* ---------- harness tokens: complete light palette on bare :root ---------- */
+:root{
+  --bg:#eef0f3; --panel:#ffffff; --ink:#1b1f26; --ink-dim:#5d6674;
+  --line:#d3d8e0; --accent:#3f5372; --accent-soft:#e5e9f0;
+  --shadow:0 1px 2px rgba(23,30,44,.08), 0 8px 24px rgba(23,30,44,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#171b21; --ink:#e6eaf0; --ink-dim:#98a2b1;
+    --line:#2a3038; --accent:#8fa6cc; --accent-soft:#222834;
+    --shadow:0 1px 2px rgba(0,0,0,.5), 0 10px 30px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#171b21; --ink:#e6eaf0; --ink-dim:#98a2b1;
+  --line:#2a3038; --accent:#8fa6cc; --accent-soft:#222834;
+  --shadow:0 1px 2px rgba(0,0,0,.5), 0 10px 30px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+body{background:var(--bg); color:var(--ink);
+  font-family:"IBM Plex Sans",-apple-system,Segoe UI,sans-serif; margin:0}
+.app{max-width:1240px; margin:0 auto; padding:20px 18px 56px}
+
+/* ---------- harness chrome ---------- */
+.bar{display:flex; flex-wrap:wrap; align-items:baseline; gap:8px 18px; margin-bottom:6px}
+.bar h1{font-size:17px; font-weight:600; letter-spacing:-.01em; margin:0}
+.bar .sub{color:var(--ink-dim); font-size:13px}
+.controls{display:flex; flex-wrap:wrap; gap:14px; align-items:center;
+  padding:12px 0 14px; border-bottom:1px solid var(--line); margin-bottom:14px}
+.group{display:flex; align-items:center; gap:8px}
+.group>span{font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-dim)}
+.tabs{display:flex; gap:4px; background:var(--accent-soft); padding:3px; border-radius:7px}
+.tab{font:inherit; font-size:13px; color:var(--ink-dim); background:none; border:0;
+  padding:6px 12px; border-radius:5px; cursor:pointer}
+.tab:hover{color:var(--ink)}
+.tab.on{background:var(--panel); color:var(--ink); font-weight:600; box-shadow:var(--shadow)}
+.tab:focus-visible{outline:2px solid var(--accent); outline-offset:1px}
+.cap{margin:0 0 14px; font-size:13px; color:var(--ink-dim); max-width:70ch; line-height:1.5}
+.cap strong{color:var(--ink)}
+
+/* ---------- the framed sample ---------- */
+.frame{border:1px solid var(--line); border-radius:10px; overflow:hidden; box-shadow:var(--shadow)}
+.stage{display:grid; min-height:520px}
+.stage a{color:inherit}
+.wnav,.wtoc{padding:22px 20px; font-size:13.5px; overflow:auto; max-height:1400px}
+.wnav-sec{margin:18px 0 6px; font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; opacity:.7}
+.wnav-sec:first-child{margin-top:0}
+.wnav-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:2px}
+.wnav-list li{padding:4px 8px; border-radius:5px; cursor:default}
+.wnav-list li[data-goto]{cursor:pointer}
+.wtoc ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:3px}
+.wtoc .l2{padding-left:12px; opacity:.85}
+.wtoc-h{font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; opacity:.7; margin:0 0 8px}
+.wmain{padding:34px 40px 60px; min-width:0}
+.wmain h1,.wmain h2,.wmain h3{text-wrap:balance}
+.wmain table{border-collapse:collapse; width:100%; font-size:14px}
+.wmain th,.wmain td{text-align:left; padding:7px 10px; vertical-align:top}
+.tablewrap,.wmain pre{overflow-x:auto}
+.wmain pre{padding:14px 16px; border-radius:6px; font-size:12.5px; line-height:1.55}
+.wmain code{font-size:.92em}
+.wmain img{max-width:100%}
+.wmain details{margin:12px 0; border-radius:6px; padding:2px 14px}
+.wmain summary{cursor:pointer; padding:9px 0; font-size:13.5px}
+.mermaid{display:block; margin:20px 0; text-align:center}
+.searchbox{display:flex; align-items:center; gap:7px; font-size:13px; padding:7px 11px;
+  border-radius:6px; margin-bottom:18px}
+
+/* =========================================================
+   STYLE A — Material for MkDocs
+   ========================================================= */
+.sty-material{--m-bg:#ffffff; --m-ink:#22262b; --m-dim:#6a7480; --m-line:#e4e7eb;
+  --m-primary:#00796b; --m-nav:#fbfbfc; --m-code:#f4f6f7; --m-codeink:#2b3137;
+  grid-template-columns:232px minmax(0,1fr) 208px;
+  background:var(--m-bg); color:var(--m-ink);
+  font-family:Roboto,system-ui,sans-serif}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .sty-material{
+  --m-bg:#1f2429; --m-ink:#e3e7ea; --m-dim:#9aa4ae; --m-line:#2f363d;
+  --m-primary:#4db6ac; --m-nav:#1a1f23; --m-code:#171b1f; --m-codeink:#d7dde2}}
+:root[data-theme="dark"] .sty-material{
+  --m-bg:#1f2429; --m-ink:#e3e7ea; --m-dim:#9aa4ae; --m-line:#2f363d;
+  --m-primary:#4db6ac; --m-nav:#1a1f23; --m-code:#171b1f; --m-codeink:#d7dde2}
+.sty-material .wnav{background:var(--m-nav); border-right:1px solid var(--m-line)}
+.sty-material .wtoc{border-left:1px solid var(--m-line); color:var(--m-dim)}
+.sty-material .wnav-list li.on{color:var(--m-primary); font-weight:500; background:rgba(0,121,107,.09)}
+.sty-material .wnav-list li[data-goto]:hover{background:rgba(0,121,107,.06)}
+.sty-material .wtoc a{color:var(--m-dim); text-decoration:none}
+.sty-material .wtoc a:hover{color:var(--m-primary)}
+.sty-material .searchbox{background:var(--m-code); color:var(--m-dim); border:1px solid var(--m-line)}
+.sty-material .wmain{font-size:15px; line-height:1.72; max-width:none}
+.sty-material .wmain h1{font-size:30px; font-weight:400; line-height:1.25; margin:0 0 22px; color:var(--m-ink)}
+.sty-material .wmain h2{font-size:22px; font-weight:400; margin:44px 0 12px;
+  padding-bottom:7px; border-bottom:1px solid var(--m-line)}
+.sty-material .wmain h3{font-size:17px; font-weight:500; margin:30px 0 8px}
+.sty-material .wmain pre{background:var(--m-code); color:var(--m-codeink);
+  font-family:"Roboto Mono",monospace; border-radius:4px}
+.sty-material .wmain code{font-family:"Roboto Mono",monospace}
+.sty-material .wmain p code,.sty-material .wmain li code{background:var(--m-code); padding:2px 5px; border-radius:3px}
+.sty-material .wmain a{color:var(--m-primary); text-decoration:none}
+.sty-material .wmain a:hover{text-decoration:underline}
+.sty-material .wmain th{border-bottom:2px solid var(--m-line); font-weight:500; font-size:13px}
+.sty-material .wmain td{border-bottom:1px solid var(--m-line)}
+.sty-material .wmain details{background:var(--m-code); border-left:3px solid var(--m-primary)}
+.sty-material .wmain summary{color:var(--m-primary); font-weight:500}
+
+/* =========================================================
+   STYLE B — Methods paper
+   ========================================================= */
+.sty-paper{--p-bg:#fcfcfa; --p-ink:#1a1c21; --p-dim:#6f7480; --p-line:#dfdfd8;
+  --p-accent:#33417a; --p-code:#f2f2ee;
+  grid-template-columns:minmax(0,1fr); background:var(--p-bg); color:var(--p-ink);
+  font-family:Spectral,Georgia,serif}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .sty-paper{
+  --p-bg:#191a1e; --p-ink:#e4e2dd; --p-dim:#9a9a96; --p-line:#2e3036;
+  --p-accent:#9aa8dd; --p-code:#212329}}
+:root[data-theme="dark"] .sty-paper{
+  --p-bg:#191a1e; --p-ink:#e4e2dd; --p-dim:#9a9a96; --p-line:#2e3036;
+  --p-accent:#9aa8dd; --p-code:#212329}
+.sty-paper .wnav{display:none}
+.sty-paper .wtoc{border-bottom:1px solid var(--p-line); max-height:none;
+  padding:20px 40px; font-family:"IBM Plex Sans",sans-serif}
+.sty-paper .wtoc ul{flex-direction:row; flex-wrap:wrap; gap:4px 20px}
+.sty-paper .wtoc .l2{display:none}
+.sty-paper .wtoc a{color:var(--p-dim); text-decoration:none; font-size:12.5px}
+.sty-paper .wtoc a:hover{color:var(--p-accent)}
+.sty-paper .searchbox{display:none}
+.sty-paper .wmain{max-width:70ch; margin:0 auto; padding:46px 40px 70px;
+  font-size:17px; line-height:1.68}
+.sty-paper .wmain h1{font-size:34px; font-weight:600; line-height:1.2; margin:0 0 8px;
+  letter-spacing:-.015em}
+.sty-paper .wmain h1::after{content:""; display:block; width:46px; height:2px;
+  background:var(--p-accent); margin:20px 0 0}
+.sty-paper .wmain h2{font-size:15px; font-weight:600; margin:44px 0 10px;
+  font-family:"IBM Plex Sans",sans-serif; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--p-accent)}
+.sty-paper .wmain h3{font-size:19px; font-weight:600; margin:28px 0 6px; font-style:italic}
+.sty-paper .wmain pre{background:var(--p-code); font-family:"IBM Plex Mono",monospace;
+  border-radius:0; border-left:2px solid var(--p-line); font-size:12px}
+.sty-paper .wmain code{font-family:"IBM Plex Mono",monospace}
+.sty-paper .wmain a{color:var(--p-accent); text-decoration:underline; text-decoration-thickness:1px;
+  text-underline-offset:2px}
+.sty-paper .wmain table{font-family:"IBM Plex Sans",sans-serif; font-size:13.5px;
+  font-variant-numeric:tabular-nums}
+.sty-paper .wmain th{border-bottom:1px solid var(--p-ink); font-weight:600;
+  font-size:11px; letter-spacing:.05em; text-transform:uppercase}
+.sty-paper .wmain td{border-bottom:1px solid var(--p-line)}
+.sty-paper .wmain details{background:none; border:1px solid var(--p-line); border-radius:0}
+.sty-paper .wmain summary{font-family:"IBM Plex Sans",sans-serif; color:var(--p-accent)}
+.sty-paper .wmain strong{font-weight:600}
+
+/* =========================================================
+   STYLE C — Terminal (single visual world, both themes)
+   ========================================================= */
+.sty-term{--t-bg:#0e1116; --t-panel:#12161c; --t-ink:#c9d3de; --t-dim:#76838f;
+  --t-line:#232b34; --t-amber:#e0a44a; --t-green:#5fc78f;
+  grid-template-columns:236px minmax(0,1fr); background:var(--t-bg); color:var(--t-ink);
+  font-family:"IBM Plex Sans",sans-serif}
+.sty-term .wnav{background:var(--t-panel); border-right:1px solid var(--t-line);
+  font-family:"IBM Plex Mono",monospace; font-size:12.5px}
+.sty-term .wnav-sec{color:var(--t-amber); opacity:1}
+.sty-term .wnav-list li{border-radius:0; padding:3px 8px}
+.sty-term .wnav-list li.on{color:var(--t-bg); background:var(--t-amber); font-weight:600}
+.sty-term .wnav-list li[data-goto]:hover{background:#1b2230}
+.sty-term .wtoc{display:none}
+.sty-term .searchbox{background:#0a0d11; border:1px solid var(--t-line); color:var(--t-dim);
+  font-family:"IBM Plex Mono",monospace; border-radius:3px}
+.sty-term .wmain{max-width:82ch; font-size:14.5px; line-height:1.7}
+.sty-term .wmain h1{font-family:"IBM Plex Mono",monospace; font-size:23px; font-weight:600;
+  margin:0 0 20px; color:var(--t-ink)}
+.sty-term .wmain h1::before{content:"$ "; color:var(--t-green)}
+.sty-term .wmain h2{font-family:"IBM Plex Mono",monospace; font-size:15px; font-weight:600;
+  color:var(--t-amber); margin:40px 0 10px; letter-spacing:.02em}
+.sty-term .wmain h2::before{content:"## "; color:var(--t-dim)}
+.sty-term .wmain h3{font-family:"IBM Plex Mono",monospace; font-size:13.5px; font-weight:600;
+  color:var(--t-green); margin:26px 0 6px}
+.sty-term .wmain pre{background:#080b0e; border:1px solid var(--t-line); border-radius:3px;
+  font-family:"IBM Plex Mono",monospace; color:#b9c6d2; font-size:12px}
+.sty-term .wmain code{font-family:"IBM Plex Mono",monospace; color:var(--t-amber)}
+.sty-term .wmain a{color:var(--t-green); text-decoration:none; border-bottom:1px dotted var(--t-green)}
+.sty-term .wmain table{font-family:"IBM Plex Mono",monospace; font-size:12.5px}
+.sty-term .wmain th{color:var(--t-amber); border-bottom:1px solid var(--t-line); font-weight:600}
+.sty-term .wmain td{border-bottom:1px solid #191f26}
+.sty-term .wmain details{background:#0a0d11; border:1px solid var(--t-line); border-radius:3px}
+.sty-term .wmain summary{font-family:"IBM Plex Mono",monospace; color:var(--t-amber)}
+.sty-term .wmain strong{color:#e8eef4}
+
+@media (max-width:900px){
+  .sty-material{grid-template-columns:minmax(0,1fr)}
+  .sty-material .wnav,.sty-material .wtoc{display:none}
+  .sty-term{grid-template-columns:minmax(0,1fr)}
+  .sty-term .wnav{display:none}
+  .wmain{padding:26px 20px 46px}
+  .sty-paper .wmain{padding:30px 22px 50px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important; animation:none!important}}
+</style>
+
+<div class="app">
+  <header class="bar">
+    <h1>Three looks for the ANGSD wiki</h1>
+    <span class="sub">Same two pages, same Markdown, three GitHub Pages treatments</span>
+  </header>
+
+  <div class="controls">
+    <div class="group"><span>Style</span><div class="tabs" role="tablist" id="styletabs"><button class="tab on" role="tab" data-style="material" aria-selected="true">Material for MkDocs</button>
+<button class="tab" role="tab" data-style="paper" aria-selected="false">Methods paper</button>
+<button class="tab" role="tab" data-style="term" aria-selected="false">Terminal</button></div></div>
+    <div class="group"><span>Page</span><div class="tabs" role="tablist" id="pagetabs">
+      <button class="tab on" role="tab" data-page="home" aria-selected="true">Home</button>
+      <button class="tab" role="tab" data-page="gl" aria-selected="false">Genotype Likelihoods</button>
+    </div></div>
+  </div>
+
+  <p class="cap" data-for="material"><strong>Material for MkDocs</strong> — The theme the proposal recommends. Left nav tree, right page contents, search.</p>
+<p class="cap" data-for="paper" hidden><strong>Methods paper</strong> — Typographic and narrow. Reads like the ANGSD paper it documents.</p>
+<p class="cap" data-for="term" hidden><strong>Terminal</strong> — Dark, monospaced, code first. Committed to one look in both themes.</p>
+
+  <div class="frame">
+    <div class="stage sty-material" id="stage">
+      <aside class="wnav">
+        <div class="searchbox">Search</div>
+        <p class="wnav-sec">Pages</p><ul class="wnav-list">
+<li class="on" data-goto="home">ANGSD overview</li>
+<li>Installation</li>
+<li>Quick Start</li>
+<li>Input data</li>
+<li>Filters</li>
+</ul>
+<p class="wnav-sec">Population genetics</p><ul class="wnav-list">
+<li>SFS Estimation</li>
+<li>Thetas, Tajima, Neutrality</li>
+<li>Fst</li>
+<li>PCA</li>
+<li>NGSadmix</li>
+</ul>
+<p class="wnav-sec">SNPs and genotypes</p><ul class="wnav-list">
+<li class="on" data-goto="gl">Genotype Likelihoods</li>
+<li>Major and Minor</li>
+<li>Allele frequencies</li>
+<li>Genotype calling</li>
+<li>SNP calling</li>
+</ul>
+<p class="wnav-sec">About</p><ul class="wnav-list">
+<li>Version log</li>
+<li>Citing angsd</li>
+<li>Authors</li>
+</ul>
+      </aside>
+      <main class="wmain">
+        <article id="p-home"><h1 id="angsd-analysis-of-next-generation-sequencing-data">ANGSD: Analysis of Next Generation Sequencing Data</h1>
+<p>ANGSD is a software for analyzing next generation sequencing data. The software can handle a number of different input types from mapped reads to imputed genotype probabilities. Most methods take genotype uncertainty into account instead of basing the analysis on called genotypes. This is especially useful for low and medium depth data. The software is written in C++ and has been used on large sample sizes.</p>
+<p>This program is not for manipulating BAM/CRAM files, but solely a tool to perform various kinds of analysis. We recommend the excellent program <a href="https://www.htslib.org/">SAMtools</a> for outputting and modifying bamfiles.</p>
+<p>ANGSD is also on github: https://github.com/ANGSD/angsd</p>
+<h2 id="overview">Overview</h2>
+<p>ANGSD reads mapped reads or precomputed genotype likelihoods/probabilities, and most analyses
+work directly on the genotype likelihoods rather than on called genotypes.</p>
+<p><pre class="mermaid">flowchart LR
+    i1["BAM / CRAM<br/>mpileup"] --> s1["Sequence data"]
+    i2["VCF / BCF<br/>GLF / beagle"] --> s2["Genotype likelihoods"]
+    i3["beagle"] --> s3["Genotype probabilities"]
+    s1 --> s2 --> s3
+    s1 --> a1["Depth and allele counts<br/>Error estimates<br/>Consensus / random-base fasta<br/>ABBABABA (D-stat)"]
+    s2 --> a2["Allele frequencies and SNP calling<br/>SAF, SFS and thetas / neutrality tests<br/>Fst and PBS<br/>Admixture, inbreeding and HWE<br/>Association<br/>Genotype calling"]
+    s3 --> a3["Genotype calling<br/>Allele frequencies<br/>Association<br/>SFS"]
+    style i1 fill:#ffe0b2,stroke:#e65100
+    style i2 fill:#ffe0b2,stroke:#e65100
+    style i3 fill:#ffe0b2,stroke:#e65100
+    style a1 fill:#bbdefb,stroke:#0d47a1
+    style a2 fill:#bbdefb,stroke:#0d47a1
+    style a3 fill:#bbdefb,stroke:#0d47a1
+</pre></p>
+<p>See <a href="Input">Input data</a> for the supported formats and <a href="Filters">Filters</a> for read and site filtering.</p>
+<h1 id="synopsis">Synopsis</h1>
+<pre><code>./angsd [OPTIONS]
+</code></pre>
+<p>example of allele frequency estimated from genotype likelihoods with bam files as input using 10 threads</p>
+<pre><code>./angsd -out outFileName -bam bam.filelist -GL 1 -doMaf 1 -doMajorMinor 1 -nThreads 10
+</code></pre>
+<h1 id="platform">Platform</h1>
+<p>The program is developed on tested on a Linux system with gcc compiler. It compiles on OSX with clang, but OSX is not really that tested.</p></article>
+        <article id="p-gl" hidden><p>Many methods in ANGSD are based on genotype likelihoods, and ANGSD has 4 different genotype likelihood models implemented.</p>
+<p>Genotype likelihoods and the four models are described in the <a href="#theory">Bottom</a>.</p>
+<p>The SOAPsnp requires that a reference is supplied. Preferably the recalibration should only be performed on non-variable sites, so we recommend that the reference fasta should be modified such that all snp sites have an 'N'.</p>
+<p>We also allow for output of the calculated genotype likelihoods in various formats that might be handy for some users.</p>
+<ul>
+<li><strong>NB the GATK model described and implemented in this program are the one described in the first GATK paper. This might be drastically different from the one used in the newer version of GATK.</strong></li>
+</ul>
+<h1 id="brief-overview">Brief Overview</h1>
+<pre><code>./angsd -GL
+    -&gt; angsd version: 0.567  build(Dec  7 2013 14:56:25)
+    -&gt; Analysis helpbox/synopsis information:
+---------------------
+analysisEstLikes.cpp:
+    -GL=0:
+    1: SAMtools
+    2: GATK
+    3: SOAPsnp
+    4: SYK
+    -trim       0       (zero means no trimming)
+    -tmpdir     angsd_tmpdir/   (used by SOAPsnp)
+    -errors     (null)      (used by SYK)
+    -minInd     0       (0 indicates no filtering)
+
+Filedumping:
+    -doGlf  0
+    1: binary glf (10 log likes)    .glf.gz
+    2: beagle likelihood file   .beagle.gz
+    3: binary 3 times likelihood    .glf.gz
+    4: text version (10 log likes)  .glf.gz
+</code></pre>
+<h1 id="options">Options</h1>
+<ul>
+<li>
+<p><strong>-GL [int]</strong>
+If your input is sequencing file you can estimate genotype likelhoods from the mapped reads. Four different methods are available.
+1. SAMtools model
+1. GATK model
+1. SOAPsnp model
+1. SYK model</p>
+</li>
+<li>
+<p><strong>NB</strong>
+When estimating GL with soapSNP we need to generate a calibration matrix. This is done automaticly if these doesn't exist. These are located in angsd_tmpdir/basenameNUM.count,angsd_tmpdir/basenameNUM.qual, and the read length is not allowed to exceed 256 base pairs.</p>
+</li>
+<li>
+<p><strong>-trim [int]</strong>
+This will discards [int] bases at both ends of the reads when calculating the genotype likelihoods.</p>
+</li>
+<li>
+<p><strong>-tmpdir [directoryPath]</strong>
+default is <code>angsd_tmpdir</code>. SOAPsnp generates a mismatch matrix for each BAM file and based on this mismatch matrix it calculates the type specific errors for each position in the read. So for each BAM file it generates two files, to avoid cluttering up the working directory you can specify a folder that should be used. SOAPsnp assumes that all reads have the same length, if this is not the case this model might not be suited (also true for other recalibration tools).</p>
+</li>
+<li>
+<p><strong>-errors [fileName]</strong>
+SYK model requires a file containing the type specific errors, as estimated from <a href="Error-estimation">-doError 1</a>.</p>
+</li>
+<li>
+<p><strong>-minInd [int]</strong>
+Discard the sites where we don't have data from <strong>-minInd</strong> individuals. If you have 100 individuals, and you only want to base your downstream analysis on the sites where you have data for at least half your samples then set <strong>-minInd 50</strong>.</p>
+</li>
+</ul>
+<h2 id="filtering">Filtering</h2>
+<p>See  <a href="Input#bam-files">Input#BAM_files</a> for Bam specific filters.</p>
+<h1 id="examples">Examples</h1>
+<p>SAMtools and GATK likelihood are chosen simply with</p>
+<pre><code>./angsd -GL 1 #SAMtools
+./angsd -GL 2 #GATK
+</code></pre>
+<p>SOAPsnp and SYK requires some extra arguments as shown below.</p>
+<h2 id="soapsnp">SOAPsnp</h2>
+<p>First run through the bam files ones to generate the calibration matrix</p>
+<pre><code>./angsd -bam bam.filelist -GL 3 -out outfile -ref hg19.fa -minQ 0
+#NB important to set -minQ to zero, ANGSD defaults to minQ 13
+</code></pre>
+<p>This first loop doesn't estimate anything else than the calibration matrix.</p>
+<p>After this run the we can estimate the genotype likelihoods and any other further analysis we desire.</p>
+<pre><code>./angsd -bam bam.filelist -GL 3 -out outfile -doGlf 1
+</code></pre>
+<h2 id="syk-kim-et-al">SYK (Kim et al.)</h2>
+<pre><code>./angsd -bam bam.filelist -GL 4 -out outfile -errors error.file -doCounts 1
+</code></pre>
+<p>This model is based on counts of bases and therefore needs <a href="Allele-Counts">Alleles_counts</a> "-doCounts 1". The error file is one line of 16 values as outputted from -doError</p>
+<h1 id="output-genotype-likelihoods">Output genotype likelihoods</h1>
+<ul>
+<li>
+<p><strong>-doGlf [int]</strong>
+Output the log genotype likelihoods to a file</p>
+</li>
+<li>
+<p><strong>0. don't output the genotype likelihoods (default)</strong></p>
+</li>
+<li>
+<p>**1.  binary all 10 log genotype likelihood **</p>
+</li>
+<li>
+<p><strong>2. beagle genotype likelihood format (use directly for imputation)</strong></p>
+</li>
+<li>
+<p><strong>3. beagle binary</strong></p>
+</li>
+<li>
+<p><strong>4. textoutput of all 10 log genotype likelihoods.</strong></p>
+</li>
+</ul>
+<h2 id="binary">Binary</h2>
+<p>Glf file in binary doubles. All 10 genotype likelihoods are printed to a file. For each printed site there are 10*N doubles where N is the number of individuals. The order of the 10 genotypes are alphabetical AA AC AG AT CC CG CT GG GT TT. These are log scaled likelihood ratios to the most likely.</p>
+<p>Pseudocode for parsing these files in <strong>c/c++</strong>.</p>
+<pre><code>FILE *fp = fopen(genotypelikelihood.bin,&quot;r&quot;)
+ind nInd = 5;
+double gls[5*10];
+fread(gls,sizeof(double),5*10,fp);
+</code></pre>
+<h2 id="beagle-format">Beagle format</h2>
+<p>Beagle haplotype imputation and be performed directly on genotype likelhoods. To generate beagle input file use</p>
+<ul>
+<li><strong>-doGlf 2</strong></li>
+</ul>
+<p>In order to make this file the major and minor allele has the be inferred <a href="Major-Minor">-doMajorMinor</a>. It is also a good idea to only use the polymorphic sites.</p>
+<h3 id="example">Example</h3>
+<p>In this example our input files are bam files. We use the samtools genotype likelihood methods. We use 10 threads. We infer the major and minor allele from the likelihoods and estimate the allele frequencies. We test for polymorphic sites and only outbut the ones with are likelhood ratio test statistic of minimum 24 (ca. p-value&lt;1e-6).</p>
+<pre><code>./angsd -GL 1 -out genolike -nThreads 10 -doGlf 2 -doMajorMinor 1  -doMaf 2 -SNP_pval 1e-6 -bam bam.filelist
+</code></pre>
+<h3 id="output">Output</h3>
+<p>The above command generates the file genolike.beagle.gz that can be use as input for the beagle software</p>
+<pre><code>marker  allele1 allele2 Ind0    Ind0    Ind0    Ind1    Ind1    Ind1    Ind2    Ind2    Ind2    Ind3    Ind3    Ind3
+1_14000023      1       0       0.941177        0.058822        0.000001        0.799685        0.199918        0.000397        0.666316        0.333155        0.000529
+1_14000072      2       3       0.709983        0.177493        0.112525        0.941178        0.058822        0.000000        0.665554        0.332774        0.001672
+1_14000113      0       2       0.855993        0.106996        0.037010        0.333333        0.333333        0.333333        0.799971        0.199989        0.000040
+1_14000202      2       0       0.835380        0.104420        0.060201        0.799685        0.199918        0.000397        0.333333        0.333333        0.333333
+...
+</code></pre>
+<p>Note that the above values sum to one per sites for each individuals. This is just a normalization of the genotype likelihoods in order to avoid underflow problems in the beagle software it does not mean that they are genotype probabilities.</p>
+<ul>
+<li><strong>column 1 (marker)</strong>
+the chromosome and position</li>
+<li><strong>column 2 (allele 1)</strong>
+the major allele codes as 0=A, 1=C, 2=G, 3=T</li>
+<li><strong>column 3 (allele 2)</strong>
+the minor allele codes as 0=A, 1=C, 2=G, 3=T</li>
+<li><strong>column 4 (Ind0)</strong>
+Genotype likelihood for the major/major genotype for the first individual</li>
+<li><strong>column 5 (Ind0)</strong>
+Genotype likelihood for the major/minor genotype for the first individual</li>
+<li><strong>column 6 (Ind0)</strong>
+Genotype likelihood for the minor/minor genotype for the first individual</li>
+<li><strong>column 7 (Ind1)</strong>
+Genotype likelihood for the major/major genotype for the second individual
+...</li>
+</ul>
+<h2 id="simple-text-format">Simple Text Format</h2>
+<pre><code>./angsd -GL 1 -bam bam.filelist -doGlf 4 -nInd 1
+</code></pre>
+<p>We use SAMtools genotype likelihoods from the first sample (<strong>-nInd 1</strong>) in the file list called <strong>bam.filelist</strong>.</p>
+<p>Generates <strong>angsdput.glf.gz</strong>, which looks like:</p>
+<pre><code>1 13999965 -2.072327 -0.693156 -2.072327 -2.072327 0.000000 -0.693156 -0.693156 -2.072327 -2.072327 -2.072327
+1 13999966 -2.072327 -2.072327 -0.693156 -2.072327 -2.072327 -0.693156 -2.072327 0.000000 -0.693156 -2.072327
+1 13999967 0.000000 -0.693156 -0.693156 -0.693156 -2.072327 -2.072327 -2.072327 -2.072327 -2.072327 -2.072327
+1 13999968 -2.072327 -2.072327 -0.693156 -2.072327 -2.072327 -0.693156 -2.072327 0.000000 -0.693156 -2.072327
+1 13999969 0.000000 -0.693156 -0.693156 -0.693156 -2.072327 -2.072327 -2.072327 -2.072327 -2.072327 -2.072327
+1 13999970 -2.072327 -2.072327 -2.072327 -0.693156 -2.072327 -2.072327 -0.693156 -2.072327 -0.693156 0.000000
+</code></pre>
+<p>First 2 columns are the genomic positions, and the final 10 values are the genotype likelihoods in the usual ordering.</p>
+<h1 id="which-genotype-likelihood-model-should-i-choose">Which genotype likelihood model should I choose ?</h1>
+<p>It depends on the data. As shown on this example <a href="Glcomparison">Glcomparison</a>, there was a huge difference between <strong>-GL 1</strong> and <strong>-GL 2</strong> for older 1000genomes BAM files, but little difference for newer bam files.</p>
+<h1 id="theory">Theory</h1>
+<p>Genotype likelihoods are in this context the likelihood the data given a genotype. This is to be understood as we take all the information from our data for a specific position for a single individual, and we use this information to calculate the likelihood for our different genotypes. Since we assume diploid individuals it follows that we have 10 different genotypes.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>7</td>
+<td>8</td>
+<td>9</td>
+</tr>
+<tr>
+<td>AA</td>
+<td>AC</td>
+<td>AG</td>
+<td>AT</td>
+<td>CC</td>
+<td>CG</td>
+<td>CT</td>
+<td>GG</td>
+<td>GT</td>
+<td>TT</td>
+</tr>
+<tr>
+<td>And we write the genotype likelihood as</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>$$
+L(G=\{A_1 ,A_2\}|D ) \propto Pr (D|G={A_1 ,A_2 } ),\qquad A_1 ,A_2 \in \{A,C,G,T\}.
+$$</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="gatk-genotype-likelihoods">GATK genotype likelihoods</h2>
+<p>In angsd we use the direct method of the first version of GATK (dragon). This is simply</p>
+<p>$$
+Pr(D|G=\{A_1,A_2\})=\prod_{i=1}^M Pr \left ( b_i|G=\{A_1,A_2\} \right) = \prod_{i=1}^M  (\frac{1}{2}Pr( b_i|A_1)  + \frac{1}{2}Pr( b_i|A_2)  )
+$$</p>
+<p>$$
+Pr(b|A) =\left\{
+  \begin{array}{lr}
+    \frac{e}{3} & : b \neq A\\
+   1-e & : b = A
+  \end{array}
+\right.
+$$</p>
+<p>where M is the sequencing depth $b_i$ is the observed base in read <em>i, e</em> is the probability of error calculated from the phredscaled qscore e.g. $e=10^{-q/10}$</p>
+<h2 id="samtools-genotype-likelihoods">SAMtools genotype likelihoods</h2>
+<pre><code>This subsection with SAMtools gl are preliminary
+</code></pre>
+<p>Define:</p>
+<p>$$
+fk_i = 0.83^i*0.97+0.03
+$$</p>
+<p>$$
+lhet_{n,k} = \log  \frac{\binom{n}{k}}{2^n}
+$$</p>
+<p>$$
+\beta_{n,k} = \frac{\beta_{n,k-1}}{\beta_{n,k-1}+\binom{n}{k}\cdot k \cdot log(prob(e))+(n-k)*log(1-prob(e))}
+$$</p>
+<h2 id="soapsnp-genotype-likelihoods">SOAPsnp genotype likelihoods</h2>
+<h2 id="syk-genotype-likelihoods">SYK genotype likelihoods</h2></article>
+      </main>
+      <aside class="wtoc">
+        <p class="wtoc-h">On this page</p>
+        <ul id="t-home"><li class="l1"><a href="#angsd-analysis-of-next-generation-sequencing-data">ANGSD: Analysis of Next Generation Sequencing Data</a></li>
+<li class="l2"><a href="#overview">Overview</a></li>
+<li class="l1"><a href="#synopsis">Synopsis</a></li>
+<li class="l1"><a href="#platform">Platform</a></li></ul>
+        <ul id="t-gl" hidden><li class="l1"><a href="#brief-overview">Brief Overview</a></li>
+<li class="l1"><a href="#options">Options</a></li>
+<li class="l2"><a href="#filtering">Filtering</a></li>
+<li class="l1"><a href="#examples">Examples</a></li>
+<li class="l2"><a href="#soapsnp">SOAPsnp</a></li>
+<li class="l2"><a href="#syk-kim-et-al">SYK (Kim et al.)</a></li>
+<li class="l1"><a href="#output-genotype-likelihoods">Output genotype likelihoods</a></li>
+<li class="l2"><a href="#binary">Binary</a></li>
+<li class="l2"><a href="#beagle-format">Beagle format</a></li>
+<li class="l2"><a href="#simple-text-format">Simple Text Format</a></li>
+<li class="l1"><a href="#which-genotype-likelihood-model-should-i-choose">Which genotype likelihood model should I choose ?</a></li>
+<li class="l1"><a href="#theory">Theory</a></li>
+<li class="l2"><a href="#gatk-genotype-likelihoods">GATK genotype likelihoods</a></li>
+<li class="l2"><a href="#samtools-genotype-likelihoods">SAMtools genotype likelihoods</a></li>
+<li class="l2"><a href="#soapsnp-genotype-likelihoods">SOAPsnp genotype likelihoods</a></li>
+<li class="l2"><a href="#syk-genotype-likelihoods">SYK genotype likelihoods</a></li></ul>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<script>
+window.MathJax={tex:{inlineMath:[["$","$"]],displayMath:[["$$","$$"]]},svg:{fontCache:"local"},
+  options:{skipHtmlTags:["script","noscript","style","textarea","pre","code"]}};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-svg.js"></script>
+<script>
+(function(){
+  var stage=document.getElementById("stage");
+  function pick(list,attr,fn){
+    list.querySelectorAll("button").forEach(function(b){
+      b.addEventListener("click",function(){
+        list.querySelectorAll("button").forEach(function(o){
+          o.classList.remove("on"); o.setAttribute("aria-selected","false");
+        });
+        b.classList.add("on"); b.setAttribute("aria-selected","true");
+        fn(b.getAttribute(attr));
+      });
+    });
+  }
+  pick(document.getElementById("styletabs"),"data-style",function(s){
+    stage.className="stage sty-"+s;
+    document.querySelectorAll(".cap").forEach(function(c){
+      c.hidden=(c.getAttribute("data-for")!==s);
+    });
+  });
+  function show(p){
+    ["home","gl"].forEach(function(k){
+      document.getElementById("p-"+k).hidden=(k!==p);
+      document.getElementById("t-"+k).hidden=(k!==p);
+    });
+    document.querySelectorAll("#pagetabs button").forEach(function(b){
+      var on=b.getAttribute("data-page")===p;
+      b.classList.toggle("on",on); b.setAttribute("aria-selected",on?"true":"false");
+    });
+    document.querySelectorAll(".wnav-list li").forEach(function(li){
+      var g=li.getAttribute("data-goto");
+      if(g) li.classList.toggle("on",g===p);
+    });
+  }
+  pick(document.getElementById("pagetabs"),"data-page",show);
+  document.querySelectorAll(".wnav-list li[data-goto]").forEach(function(li){
+    li.addEventListener("click",function(){ show(li.getAttribute("data-goto")); });
+  });
+})();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>(function(){
+  if(!window.mermaid) return;
+  var dark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  mermaid.initialize({startOnLoad:true, theme: dark ? "dark" : "default", securityLevel:"loose"});
+})();</script>
+</body>
+</html>
