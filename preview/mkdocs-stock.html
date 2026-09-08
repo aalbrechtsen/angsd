@@ -29,7 +29,6 @@
 .demo-btn:hover{color:#fff}
 .demo-btn.on{background:#e6eaf0;color:#12151b;border-color:#e6eaf0;font-weight:600}
 .demo-btn:focus-visible{outline:2px solid #7aa2ff;outline-offset:1px}
-.demo-home{margin-left:auto;font-size:12px;color:#8fa2b8}
 .mermaid{display:block;margin:20px 0;text-align:center}
 mjx-container[display]{overflow-x:auto;overflow-y:hidden;max-width:100%}
 </style>
@@ -150,7 +149,7 @@ mjx-container[display]{overflow-x:auto;overflow-y:hidden;max-width:100%}
     
     
       <div class="md-header__source">
-        <a href="https://github.com/ANGSD/angsd" title="Go to repository" class="md-source" data-md-component="source">
+        <a href="https://github.com/aalbrechtsen/angsd" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
@@ -196,7 +195,7 @@ mjx-container[display]{overflow-x:auto;overflow-y:hidden;max-width:100%}
   </label>
   
     <div class="md-nav__source">
-      <a href="https://github.com/ANGSD/angsd" title="Go to repository" class="md-source" data-md-component="source">
+      <a href="https://github.com/aalbrechtsen/angsd" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
@@ -3463,6 +3462,14 @@ mjx-container[display]{overflow-x:auto;overflow-y:hidden;max-width:100%}
                   
 
 
+  
+    <a href="https://github.com/aalbrechtsen/angsd/wiki/index" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
 
 <h1 id="angsd-analysis-of-next-generation-sequencing-data">ANGSD: Analysis of Next Generation Sequencing Data</h1>
 <p>ANGSD is a software for analyzing next generation sequencing data. The software can handle a number of different input types from mapped reads to imputed genotype probabilities. Most methods take genotype uncertainty into account instead of basing the analysis on called genotypes. This is especially useful for low and medium depth data. The software is written in C++ and has been used on large sample sizes.</p>
@@ -3495,6 +3502,8 @@ flowchart LR
 </code></pre></div>
 <h1 id="platform">Platform</h1>
 <p>The program is developed on tested on a Linux system with gcc compiler. It compiles on OSX with clang, but OSX is not really that tested.</p>
+<hr />
+<p><em>This page is a snapshot. The live, always-current version is on the <a href="https://github.com/aalbrechtsen/angsd/wiki">ANGSD wiki</a> — edit it there and this site rebuilds automatically.</em></p>
 
 
 
@@ -3674,7 +3683,7 @@ flowchart LR
     
     
       <div class="md-header__source">
-        <a href="https://github.com/ANGSD/angsd" title="Go to repository" class="md-source" data-md-component="source">
+        <a href="https://github.com/aalbrechtsen/angsd" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
@@ -3720,7 +3729,7 @@ flowchart LR
   </label>
   
     <div class="md-nav__source">
-      <a href="https://github.com/ANGSD/angsd" title="Go to repository" class="md-source" data-md-component="source">
+      <a href="https://github.com/aalbrechtsen/angsd" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
@@ -6922,6 +6931,14 @@ flowchart LR
                   
 
 
+  
+    <a href="https://github.com/aalbrechtsen/angsd/wiki/Genotype-Likelihoods" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
 
 <h1 id="genotype-likelihoods">Genotype Likelihoods</h1>
 <p>Many methods in ANGSD are based on genotype likelihoods, and ANGSD has 4 different genotype likelihood models implemented.</p>
@@ -7209,6 +7226,8 @@ lhet_{n,k} = \log  \frac{\binom{n}{k}}{2^n}
 \]</div>
 <h2 id="soapsnp-genotype-likelihoods">SOAPsnp genotype likelihoods</h2>
 <h2 id="syk-genotype-likelihoods">SYK genotype likelihoods</h2>
+<hr />
+<p><em>This page is a snapshot. The live, always-current version is on the <a href="https://github.com/aalbrechtsen/angsd/wiki/Genotype-Likelihoods">ANGSD wiki</a> — edit it there and this site rebuilds automatically.</em></p>
 
 
 
@@ -7288,6 +7307,6 @@ document.querySelectorAll('.demo-btn').forEach(function(btn){
 });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
-<script>(function(){if(!window.mermaid)return;var d=document.documentElement.getAttribute("data-md-color-scheme")==="slate"||document.body.innerHTML.indexOf("0e1116")>-1||(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);mermaid.initialize({startOnLoad:true,theme:d?"dark":"default",securityLevel:"loose"});})();</script>
+<script>(function(){if(!window.mermaid)return;var d=(document.querySelector("[data-md-color-scheme=slate]")!==null)||(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);mermaid.initialize({startOnLoad:true,theme:d?"dark":"default",securityLevel:"loose"});})();</script>
 </body>
 </html>
